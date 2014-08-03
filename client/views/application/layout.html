@@ -1,0 +1,16 @@
+<template name="layout">
+  <body>
+    <div class="container">
+    {{> header}}
+      <div id="main" class="row-fluid">
+        <audio id="audio" preload="auto" tabindex="0" controls="" ></audio>
+        {{#if currentUser}}
+        <form>
+          <input name="url" type="text" value="" placeholder="create a new playlist"/>
+        </form>
+        {{/if}}
+        {{> yield}}
+      </div>
+    </div>
+  </body>
+</template>

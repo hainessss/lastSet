@@ -1,9 +1,13 @@
 <template name="trackList">
   <div class="tracks">
+    <h3>My Channels</h3>
+      <a href="{{pathFor 'favorites'}}">Soundcloud</a>
+    <h3>My Sets</h3>
     <div id='playlist'>
       {{#each playlists}}
         {{> playlistName}}
       {{/each}}
     </div>
+    <h3>My Collaborations</h3>
   </div>
 </template>

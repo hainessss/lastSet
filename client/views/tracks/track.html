@@ -1,16 +1,23 @@
 <template name="track">
   <div class="track">
     <div class="track-content">
-      <a class="track-link" href="{{url}}">{{artist}} - {{name}}</a>
+      <a class="track-link" href="{{track_url}}">{{artist}} - {{name}}</a>
+      {{#if currentUser}}
       <div class="dropdown">
         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
           Dropdown
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Test</a></li>
+          {{#each playlists}}
+            <li role="presentation"><a class="playlist-dropdown" data-pid={{_id}} data-soundId={{../soundId}} role="menuitem" tabindex="-1" href="{{pathFor 'playlist'}}">{{name}}</a></li>
+          {{/each}}
         </ul>
       </div>
+      {{/if}}
     </div>
   </div>
+  {{#each comments}}
+    {{> comment}}
+  {{/each}}
 </template>

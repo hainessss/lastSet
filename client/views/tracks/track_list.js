@@ -1,10 +1,7 @@
 
 Template.trackList.helpers({
-  tracks: function() {
-    return Tracks.find();
-  },
   playlists: function() {
-    return Playlists.find();
+    return Playlists.find({}, {sort: {submitted: 1}});
   }
 });
 

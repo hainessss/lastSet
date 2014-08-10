@@ -4,8 +4,8 @@ Template.layout.events({
 
     var audio = $('audio')[0];
     var playlist = $('#playlist');
-    var tracks = playlist.find('li a');
-    var url = this.url
+    var tracks = playlist.find('.track-link');
+    var url = this.track_url
     var currentTrack = $(e.currentTarget).index();
 
     var run = function(link, player) {
@@ -18,18 +18,24 @@ Template.layout.events({
 
     audio.addEventListener('ended', function(){
       currentTrack++;
-      url = playlist.find('a')[currentTrack]
+      url = playlist.find('.track-link')[currentTrack]
       run(url, audio);
     });
   },
 
-  'submit form': function(e) {
+  'submit #playlist-form form': function(e) {
     e.preventDefault();
 
     var playlist = {
       name: $(e.target).find('input').val()
     }
 
-    Router.go('playlist');
+    Meteor.call('createPlaylist', playlist, function(error, id) {
+      if (error) {
+        throwError(error.reason);
+      }
+
+      Router.go('playlist', {_id: id})
+    });
   }
 });

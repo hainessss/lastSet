@@ -106,3 +106,10 @@ body {
   background: rgba(0, 0, 0, 0.1);
 }
 
+blockquote {
+  border-left: 3px solid #e67e22;
+  margin: 1em 10px;
+  padding: 0.5em 10px;
+}
+
+

@@ -2,9 +2,21 @@
   <div class="tracks">
     <div id='playlist'>
     <h3>{{name}}</h3>
+    <div class="control-group">
+      <div class="controls">
+        <a class="btn btn-danger delete" href="#">Delete playlist</a>
+      </div>
+    </div>
       {{#each tracks}}
         {{> track}}
       {{/each}}
+      {{#if currentUser}}
+      <div id="comment-form">
+        <form>
+          <input name="comment" id="comment" type="text" value="" placeholder="enter comment"/>
+        </form>
+      </div>
+      {{/if}}
     </div>
   </div>
 </template>

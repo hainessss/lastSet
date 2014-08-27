@@ -39,3 +39,7 @@ Template.layout.events({
     });
   }
 });
+
+Template.layout.created = function() {
+  Meteor.Loader.loadJs("https://www.rdio.com/api/api.js?helper=/../../helper.html&client_id=6_TnF7zv2TXtq30JW1w2xA");
+};

@@ -12,7 +12,8 @@ Template.track.helpers({
 Template.track.events({
   'click .playlist-dropdown': function(e) {
     e.preventDefault();
-    var sound = Favorites.findOne({soundId: parseInt(e.currentTarget.dataset.soundid)});
+
+    var sound = Sounds.findOne({soundId: parseInt(e.currentTarget.dataset.soundid)});
 
     Meteor.call('addPlaylistTrack',
       this._id, sound, function(error, result) {

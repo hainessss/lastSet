@@ -1,12 +1,12 @@
-<template name="favorites">
-  <h1>This worked</h1>
+<template name="search">
+  <h1>Search Results</h1>
   <div id='playlist'>
     {{#if soundsLoaded}}
-      {{#each sounds}}
+      {{#each searchResults}}
         {{> track}}
       {{/each}}
     {{else}}
-      {{>spinner}}
+      {{> spinner}}
     {{/if}}
   </div>
 </template>

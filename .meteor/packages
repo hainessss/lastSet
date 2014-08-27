@@ -10,3 +10,7 @@ iron-router
 spin
 accounts-facebook
 accounts-ui
+npm
+soundcloud
+rdio
+external-file-loader

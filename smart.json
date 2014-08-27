@@ -1,6 +1,10 @@
 {
   "packages": {
     "iron-router": {},
-    "spin": {}
+    "spin": {},
+    "npm": {},
+    "soundcloud": {},
+    "rdio": {},
+    "external-file-loader": {}
   }
 }

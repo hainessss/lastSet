@@ -1,5 +1,9 @@
 Template.favorites.helpers({
   sounds: function() {
-    return Favorites.find();
+    return Sounds.find({type: 'soundcloud'});
+  },
+
+  soundsLoaded: function() {
+    return Session.get('soundsLoaded');
   }
 });

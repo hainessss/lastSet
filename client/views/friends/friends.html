@@ -1,0 +1,11 @@
+<template name='friends'>
+  <div class="friends">
+  {{#if friendsLoaded}}
+    {{#each friendsData}}
+      {{> friend}}
+    {{/each}}
+  {{else}}
+    {{> spinner}}
+  {{/if}}
+  </div>
+</template>

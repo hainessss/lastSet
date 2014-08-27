@@ -1,1 +1,3 @@
-Favorites = new Meteor.Collection(null);
+Sounds = new Meteor.Collection(null);
+
+

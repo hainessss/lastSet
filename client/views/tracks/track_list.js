@@ -1,24 +1,12 @@
 
 Template.trackList.helpers({
   playlists: function() {
-    return Playlists.find({}, {sort: {submitted: 1}});
+    return Playlists.find({userId: Meteor.userId()}, {sort: {submitted: 1}});
+  },
+
+  collaborations: function() {
+    return Playlists.find({collaborators: Meteor.userId()});
   }
 });
 
-Template.trackList.events({
-  'click .tracks': function() {
-    console.log('test worked')
-  }
-});
 
-Template.trackList.events({
-  'click #playlist': function(e) {
-    result = Meteor.call('getSounds',  function (error, result) {
-        console.log(result);
-        Template.trackList.scUSer = result;
-      }
-    );
-    console.log('triggered')
-  }
-
-});

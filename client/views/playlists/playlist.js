@@ -31,7 +31,6 @@ Template.playlist.events({
 
   'submit #comment-form form': function(e) {
     e.preventDefault();
-    console.log('hi');
     var content = $(e.target).find('input').val();
     var lastTrack = Session.get('last');
 

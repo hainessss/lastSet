@@ -14,7 +14,9 @@ Meteor.methods({
 
     var playlist = _.extend(_.pick(playlistData, 'name'), {
       userId: user._id,
-      submitted: new Date().getTime()
+      submitted: new Date().getTime(),
+      collaborators: [],
+      FB_id: user.services.facebook.id
     });
 
     var playlistId = Playlists.insert(playlist);
@@ -24,7 +26,7 @@ Meteor.methods({
 
   deletePlaylist: function(playlistId, playlistAdminId) {
     var user = Meteor.user();
-    var ownsPlaylist = function(userId, pAdminId) {
+    var ownsPlaylist = function(userId, pfAdminId) {
       return userId === pfAdminId;
     }
 
@@ -38,5 +40,15 @@ Meteor.methods({
 
 
     var playlistId = Playlists.remove(playlistId);
+  },
+
+  addCollaborator: function(playlistId) {
+    var user = Meteor.user();
+
+    if (!user) {
+      throw new Meteor.Error(401, "You must be logged in to create a new playlist");
+    }
+
+    return Playlists.update({_id: playlistId}, {$push: {collaborators: user._id}});
   }
 });

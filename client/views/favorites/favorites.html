@@ -1,9 +1,14 @@
 <template name="favorites">
-  <h1>This worked</h1>
-  <div id='playlist'>
+  <div class="row">
+      <div class="col-lg-12 underline">
+          <h1 class="page-header">Favorites</h1>
+      </div>
+      <!-- /.col-lg-12 -->
+  </div>
+  <div id='playlist' data-id='soundcloud'>
     {{#if soundsLoaded}}
       {{#each sounds}}
-        {{> track}}
+        {{> sound}}
       {{/each}}
     {{else}}
       {{>spinner}}

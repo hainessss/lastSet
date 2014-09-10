@@ -7,7 +7,9 @@
       "npm": {},
       "soundcloud": {},
       "rdio": {},
-      "external-file-loader": {}
+      "external-file-loader": {},
+      "flat-ui-less": {},
+      "bootstrap-3": {}
     },
     "packages": {
       "iron-router": {
@@ -39,6 +41,16 @@
         "git": "https://github.com/davidd8/meteor-external-file-loader.git",
         "tag": "v0.1.4",
         "commit": "352694a7cf906b8241161c2fd1435161c1d5409f"
+      },
+      "flat-ui-less": {
+        "git": "https://github.com/aashuagg/Flat-UI.git",
+        "tag": "v0.0.1",
+        "commit": "0a258bf2fce219df2953aa96e8fe5d6ee16695d3"
+      },
+      "bootstrap-3": {
+        "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
+        "tag": "v3.2.0-1",
+        "commit": "17a63902fc6cf1096c5289d963c66cf28b474727"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",

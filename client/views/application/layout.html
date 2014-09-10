@@ -1,19 +1,125 @@
 <template name="layout">
   <body>
-    <div class="container">
-    {{> header}}
-    {{> errors}}
-      <div id="main" class="row-fluid">
-        <audio id="audio" preload="auto" tabindex="0" controls="" ></audio>
-        {{#if currentUser}}
-        <div id='playlist-form'>
-          <form>
-            <input name="url" id="playlist-form" type="text" value="" placeholder="create a new playlist"/>
-          </form>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav id="header" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{pathFor 'home'}}"><strong>Set</strong>list.us</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <li>
+                  <div id='song-search'>
+                    <form class="search">
+                        <input type="text" placeholder="Search here" class="search-bar" />
+                    </form>
+                  </div>
+                </li>
+
+
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a id="notifications-dropdown" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                      {{#if notificationsCount}}
+                        <i class="fa fa-fw"><span class="navbar-new">{{notificationsCount}}</span></i>  <i class="fa fa-caret-down"></i>
+                      {{else}}
+                        <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                      {{/if}}
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                      {{#if notificationsCount}}
+                        {{#each notifications}}
+                          {{> notification}}
+                        {{/each}}
+                      {{else}}
+                        <li><a href='#'>No new notifications</a></li>
+                      {{/if}}
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <!-- /.dropdown -->
+                <li>
+                  <a href="{{pathFor 'friends'}}">Friends</a>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                  {{> loginButtons}}
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <div class="row side-row">
+                      <h3>Channels</h3>
+                      <ul class="playlist-name">
+                          {{#if scUser}}
+                            <li>
+                            <div id='soundcloud-form'>
+                              <form class="search">
+                                <input type="text" name="addPlaylist" placeholder="Enter Souncloud username" class="search-bar playlist-form" />
+                              </form>
+                            </div>
+                          </li>
+                          {{else}}
+                            <a class="sidebar-link" id="scUser" href="{{pathFor 'favorites'}}">Soundcloud</a>
+                          {{/if}}
+                        <li>
+                          <a class="sidebar-link" id="rdioUser" href="#">Rdio</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="row side-row">
+                      <h3>Playlists <span class="add"><a id="add-playlist" href="#">+</a></span></h3>
+                      <ul class="playlist-name">
+                        {{#each playlists}}
+                          {{> playlistName}}
+                        {{/each}}
+                        {{#if activeForm}}
+                          <li>
+                            <div id='playlist-form'>
+                              <form class="search">
+                                <input type="text" name="addPlaylist" placeholder="Create playlist" class="search-bar playlist-form" />
+                              </form>
+                            </div>
+                          </li>
+                        {{/if}}
+                      </ul>
+                    </div>
+                    <div class="row side-row">
+                      <h3>Collaborations</h3>
+                        <ul class="playlist-name">
+                          {{#each collaborations}}
+                            {{> playlistName}}
+                          {{/each}}
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+        <audio id="audio" preload="auto" tabindex="0" controls=""></audio>
+            {{> yield}}
+
+            {{> footer}}
         </div>
-        {{/if}}
-        {{> yield}}
-      </div>
+        <!-- /#page-wrapper -->
+
     </div>
-  </body>
+</body>
 </template>

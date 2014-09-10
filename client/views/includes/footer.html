@@ -1,0 +1,27 @@
+<template name="footer">
+  <div class='row'>
+    <div class="artwork">
+      {{#if nowPlaying}}
+        <img id="album-art" src="{{nowPlaying.artwork_url}}" />
+      {{else}}
+        <img id="album-art" src="{{albumArt}}" />
+      {{/if}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 footer">
+      <div id='progress'></div>
+      <div class="player">
+        <div class="controls">
+          <a id="back" href="#"><img id="control" src="/images/back-button.png" /></a>
+          {{#if playing}}
+            <a id="pause" class="play" href="#"><img id="pause" src="/images/pause.png" /></a>
+          {{else}}
+            <a id="play" class="play" href="#"><img id="play" src="/images/play.png" /></a>
+          {{/if}}
+          <a id="forward" href="#"><img id="control" src="/images/forward-button.png" /></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

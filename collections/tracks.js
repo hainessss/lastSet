@@ -2,6 +2,7 @@ Tracks = new Meteor.Collection('tracks');
 
 Meteor.methods({
   getSounds: function() {
+    var user = Meteor.user();
     // SC.initialize({
     //     client_id: "89625b1333ea9f17f401731e84eb3382"
     // });
@@ -12,7 +13,7 @@ Meteor.methods({
     //   console.log(user.id);
     // });
     this.unblock();
-    return HTTP.call('GET', 'http://api.soundcloud.com/resolve.json?url=http://soundcloud.com/remixisking&client_id=89625b1333ea9f17f401731e84eb3382');
+    return HTTP.call('GET', 'http://api.soundcloud.com/resolve.json?url=http://soundcloud.com/' + user.scUser + '&client_id=89625b1333ea9f17f401731e84eb3382');
   },
 
   addPlaylistTrack: function(playlistId, trackData) {
@@ -25,11 +26,11 @@ Meteor.methods({
     }
 
     if(!sound) {
-      throw new Meteor.Error(422, "Your track must have a soundId");
+      throw new Meteor.Error(422, "Your track must have a track to add");
     }
 
-    var track = _.extend(_.pick(sound, 'soundId', 'track_url', 'artist', 'name'),
-      {pid: playlistId, submitted: new Date().getTime()
+    var track = _.extend(_.pick(sound, 'soundId', 'track_url', 'artist', 'name', 'artwork_url', 'duration'),
+      {pid: playlistId, submitted: new Date().getTime(), nowPlaying: null, type: 'track'
     });
 
     track._id = Tracks.insert(track);

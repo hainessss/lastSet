@@ -7,10 +7,11 @@ Template.friend.helpers({
 Template.friend.events({
   'click .playlist-dropdown': function(e) {
     var playlistId = this._id;
-    console.log(this);
+    var adminId = this.userId;
+    var joinerId = Meteor.userId();
 
-    Meteor.call('addCollaborator', playlistId, function(error, result) {
-      if (errror) {
+    Meteor.call('addCollaborator', playlistId, false, adminId, joinerId, function(error, result) {
+      if (error) {
         return alert(error.reason);
       }
     });

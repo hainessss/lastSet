@@ -1,23 +1,35 @@
 <template name="track">
-  <div class="track">
-    <div class="track-content">
-      <a class="track-link" href="{{track_url}}">{{artist}} - {{name}}</a>
-      {{#if currentUser}}
-      <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-          Dropdown
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-          {{#each playlists}}
-            <li role="presentation"><a class="playlist-dropdown" data-pid={{_id}} data-soundId={{../soundId}} role="menuitem" tabindex="-1" href="{{pathFor 'playlist'}}">{{name}}</a></li>
-          {{/each}}
-        </ul>
-      </div>
-      {{/if}}
+  <div class="row">
+    <div class="col-lg-12">
+        <div class="panel track panel-default box-shadow">
+            <div class="panel-body">
+                <div class="track-name">
+                  <img id="track-play" src="/images/play.png" />
+                  <a class="track-link" href="#" data-id="{{_id}}"><h4 class="track-title">{{name}}</h4></a>
+                </div>
+                <div class="track-drop">
+                <ul class="nav navbar-right">
+
+                    <!-- /.dropdown -->
+                    <li class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Add<span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-alerts">
+                          {{#each playlists}}
+                            <li>
+                                <a class="playlist-dropdown" data-id={{../_id}} role="menuitem" tabindex="-1" href="{{pathFor 'playlist'}}">{{name}}</a>
+                            </li>
+                            <li class="divider"></li>
+                          {{/each}}
+                        </ul>
+                        <!-- /.dropdown-alerts -->
+                    </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  {{#each comments}}
+</div>
+{{#each comments}}
     {{> comment}}
-  {{/each}}
+{{/each}}
 </template>

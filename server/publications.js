@@ -18,6 +18,9 @@ Meteor.publish('friendsPlaylists', function(userList) {
   return Playlists.find({FB_id: {$in: userList}});
 });
 
+Meteor.publish('notifications', function(userId) {
+  return Notifications.find({userId: userId, read: false});
+});
 
 Meteor.publish('comments', function(playlistId) {
   return Comments.find({playlistId: playlistId});
@@ -26,7 +29,7 @@ Meteor.publish('comments', function(playlistId) {
 Meteor.publish("userData", function () {
   if (this.userId) {
     return Meteor.users.find({_id: this.userId},
-                             {fields: {'services.facebook.id': 1}});
+                             {fields: {'services.facebook.id': true, 'scUser': true}});
   } else {
     this.ready();
   }

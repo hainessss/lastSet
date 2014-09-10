@@ -1,0 +1,20 @@
+<template name='notification'>
+  {{#if replyNeeded}}
+    <li>
+      <div>
+        <p><strong>{{joiner}}</strong> wants to join your playlist <strong>{{playlistName}}</strong><span><button id="accept" class="btn btn-embossed btn-tiny btn-primary"><i class="fa fa-check-circle fa-fw"></i></button>  <button id="deny" class="btn btn-embossed btn-tiny btn-primary"><i class="fa fa-times-circle fa-fw"></i></button></span>
+        </p>
+          <span id="alternate" class="pull-right text-muted small">4 minutes ago</span>
+      </div>
+    </li>
+  {{else}}
+    <li>
+      <a class='notification' href="#">
+          <div>
+            <strong>{{joiner}}</strong> joined your playlist <strong>{{playlistName}}</strong>
+              <span class="pull-right text-muted small">4 minutes ago</span>
+          </div>
+      </a>
+    </li>
+  {{/if}}
+</template>

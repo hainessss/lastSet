@@ -1,22 +1,51 @@
 <template name="playlist">
-  <div class="tracks">
-    <div id='playlist'>
-    <h3>{{name}}</h3>
-    <div class="control-group">
-      <div class="controls">
-        <a class="btn btn-danger delete" href="#">Delete playlist</a>
+  <div class="row">
+      <div class="col-lg-12 underline">
+          <h1 class="page-header">{{name}}</h1>
+            {{#if ownPlaylist}}
+              <button type="button" class="btn btn-embossed btn-danger delete">Delete Playlist</button>
+            {{/if}}
+            {{#if isCollaborator}}
+              <button type="button" class="btn btn-embossed btn-danger leave">Leave Playlist</button>
+            {{/if}}
       </div>
-    </div>
-      {{#each tracks}}
-        {{> track}}
-      {{/each}}
-      {{#if currentUser}}
-      <div id="comment-form">
-        <form>
-          <input name="comment" id="comment" type="text" value="" placeholder="enter comment"/>
-        </form>
-      </div>
-      {{/if}}
-    </div>
+      <!-- /.col-lg-12 -->
   </div>
+
+  {{#if ownPlaylist}}
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel search panel-default box-shadow">
+            <div class="options">
+              <label id="private" class="radio">
+                <span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span>
+                <input type="radio" name="group2" value="2" data-toggle="radio">Private
+              </label>
+            </div>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+
+  {{#if isCollaborator}}
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel search panel-default box-shadow">
+            <div class="options">
+              <label id="tune" class="radio unchecked">
+                <span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span>
+                <input type="radio" name="group2" value="2" data-toggle="radio">Tune in
+              </label>
+            </div>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+
+  <div id='playlist' data-id="{{_id}}">
+    {{#each tracks}}
+      {{> track}}
+    {{/each}}
+  </div>
+  <!-- /.row -->
 </template>

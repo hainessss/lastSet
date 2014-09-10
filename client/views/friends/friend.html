@@ -1,20 +1,23 @@
 <template name="friend">
-  <div class="track">
-    <div class="track-content">
-      <a class="friend-link" href="{{track_url}}">{{name}}</a>
-      {{#if currentUser}}
-      <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-          Collaborate
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-          {{#each playlists}}
-            <li role="presentation"><a class="playlist-dropdown" data-pid={{_id}} data-soundId={{../soundId}} role="menuitem" tabindex="-1" href="{{pathFor 'playlist'}}">{{name}}</a></li>
-          {{/each}}
-        </ul>
-      </div>
-      {{/if}}
+  <div class="friend">
+    <div class="profile-picture">
+      <img class='profile' src="{{profilePhoto}}" />f
+    </div>
+    <div class="track-drop">
+      <ul class="nav navbar-right">
+        <!-- /.dropdown -->
+        <li class="dropdown">
+            <button class="btn btn-primary dropdown-toggle friend-dropdown" data-toggle="dropdown">Join<br><span class="caret"></span></button>
+            <ul class="dropdown-menu dropdown-alerts">
+              {{#each playlists}}
+                <li>
+                    <a class="playlist-dropdown" data-pid={{_id}} data-soundId={{../soundId}} role="menuitem" tabindex="-1" href="{{pathFor 'playlist'}}">{{name}}</a>
+                </li>
+                <li class="divider"></li>
+              {{/each}}
+            </ul>
+        </li>
+      </ul>
     </div>
   </div>
 </template>

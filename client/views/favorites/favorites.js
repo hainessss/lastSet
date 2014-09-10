@@ -7,3 +7,4 @@ Template.favorites.helpers({
     return Session.get('soundsLoaded');
   }
 });
+

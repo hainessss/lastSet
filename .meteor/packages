@@ -4,7 +4,6 @@
 # but you can also edit it by hand.
 
 standard-app-packages
-bootstrap
 http
 iron-router
 spin
@@ -14,3 +13,5 @@ npm
 soundcloud
 rdio
 external-file-loader
+flat-ui-less
+natestrauser:font-awesome

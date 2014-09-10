@@ -1,9 +1,14 @@
 <template name="search">
-  <h1>Search Results</h1>
-  <div id='playlist'>
-    {{#if soundsLoaded}}
+  <div class="row">
+      <div class="col-lg-12 underline">
+          <h1 class="page-header">Search Results</h1>
+      </div>
+      <!-- /.col-lg-12 -->
+  </div>
+  <div id='playlist' data-id="search">
+    {{#if searchLoaded}}
       {{#each searchResults}}
-        {{> track}}
+        {{> sound}}
       {{/each}}
     {{else}}
       {{> spinner}}

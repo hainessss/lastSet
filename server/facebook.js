@@ -30,13 +30,16 @@ Facebook.prototype.getUserData = function() {
 }
 
 Facebook.prototype.getProfilePhoto = function (id) {
-  return this.query('/' + id + '/picture?type=200');
+  return this.query('/' + id + '/picture?type=square');
 }
 
 Meteor.methods({
-  getFriendsData: function() {
+  getFriendsData: function(id) {
     var fb = new Facebook(Meteor.user().services.facebook.accessToken);
     var data = fb.getFriendsData();
+    for (var i = 0; i < data.data.length; i++) {
+      data.data[i].profilePhoto = fb.getProfilePhoto(data.data[i].id).location;
+    };
     return data;
   },
 

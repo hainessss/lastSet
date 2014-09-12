@@ -8,6 +8,14 @@ Queue = {
     return this.tracks;
   },
 
+  getMediaType: function(index) {
+    if (this.tracks[index].track_url) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
   update: function(playlistId) {
     this.playlistId = playlistId;
 
@@ -29,16 +37,16 @@ Template.layout.rendered = function() {
             updateProgress();
             Session.set('nowPlaying', false);
 
-            //pause rdio source
-            R.player.pause();
-
             //set album art and update playlist with current song
             Session.set('albumArt', Queue.tracks[Session.get('currentTrack')].artwork_url);
             Playlists.update(Queue.playlistId, {$set: {nowPlaying: Queue.tracks[Session.get('currentTrack')]}});
           }).bind('pause', function() {
             Session.set('playing', false);
+            killProgress();
           }).bind('error', function() {
             $('audio').trigger("ended");
+          }).bind('timeupdate', function() {
+            Playlists.update(Queue.playlistId, {$set: {nowPlayingTrackPosition: Queue.progress}});
           }).bind('ended', function() {
             Queue.progress = 0;
             Session.set('playing', false);
@@ -46,8 +54,7 @@ Template.layout.rendered = function() {
                 var index = Session.get('currentTrack');
                 index++;
                 Session.set('currentTrack', index);
-                loadTrack(index);
-                Audio.play();
+                playTrack(index);
             } else {
                 Audio.pause();
                 index = 0;
@@ -61,20 +68,40 @@ loadTrack = function(currentTrack) {
   // $('#plUL li:eq(' + id + ')').addClass('plSel');
   // npTitle.text(tracks[id].name);
   // index = id;
-  Session.set('playing', false);
+
   Session.set('currentTrack', currentTrack);
   Audio.src = Queue.tracks[Session.get('currentTrack')].track_url;
 };
 
 playTrack = function(currentTrack) {
-  loadTrack(currentTrack);
-  Audio.play();
+  //resets progress bar
+  Queue.progress = 0;
+  killProgress();
+
+  var track = Queue.tracks[currentTrack];
+
+  //determines wether to use HTML5 audio api or Rdio API
+  if (track.track_url) {
+    R.player.pause();
+    loadTrack(currentTrack);
+    Audio.play();
+  } else {
+    Audio.pause();
+    R.player.play({source: track.soundId});
+  }
 };
+
+killProgress = function() {
+  if (Session.get('timeoutId')) {
+    clearTimeout(Session.get('timeoutId'));
+  }
+  Session.set('timeoutId', false);
+}
 
 
 updateProgress = function() {
   //find duration of current track and convert to seconds
-  var max = Queue.tracks[Session.get('currentTrack')].duration * .001;
+  var max = Queue.tracks[Session.get('currentTrack')].duration;
   var increment = 100 / max;
 
   if((Queue.progress < 99) && (Session.get('playing'))) {
@@ -109,6 +136,10 @@ Template.layout.helpers({
 
   scUser: function() {
     return Session.get('scUser');
+  },
+
+  rdioUser: function() {
+    return Session.get('rdioUser');
   }
 });
 
@@ -118,10 +149,6 @@ Template.layout.events({
     e.preventDefault();
 
     //clears progress bar
-    Queue.progress = 0;
-    if (Session.get('timeoutId')) {
-      clearTimeout(Session.get('timeoutId'));
-    }
 
 
     var playlistId = $(e.currentTarget).parents('#playlist').attr("data-id");
@@ -129,13 +156,8 @@ Template.layout.events({
     var currentTrack = $(e.currentTarget).parents('#playlist').find('.track-link').index(e.currentTarget);
     Session.set('currentTrack', currentTrack);
 
-    var track = Queue.tracks[Session.get('currentTrack')];
 
-    if (track.track_url) {
-      playTrack(Session.get('currentTrack'));
-    } else {
-      R.player.play({source: track.trackKey});
-    }
+    playTrack(currentTrack);
   },
 
   'submit #playlist-form form': function(e) {
@@ -169,9 +191,11 @@ Template.layout.events({
       Session.set('searchLoaded', true);
     });
 
-    Meteor.call('searchRdio', query, function(result) {
-      console.log(result);
-    });
+    if (R.currentUser.attributes.canStreamHere) {
+      Meteor.call('searchRdio', query, function(result) {
+
+      });
+    }
 
     Router.go('search');
   },
@@ -202,8 +226,15 @@ Template.layout.events({
     e.preventDefault();
 
     R.authenticate(function(nowAuthenticated) {
-      Router.go('rdio');
-    })
+      if (R.currentUser.attributes.canStreamHere) {
+        var username = R.currentUser.attributes.vanityName;
+        Session.set('rdioUser', true);
+
+        Meteor.call('addRdioUsername', username, function(error, result) {
+          Router.go('rdio');
+        });
+      }
+    });
   },
 
   'submit #soundcloud-form form': function(e) {
@@ -228,16 +259,7 @@ Template.layout.events({
 
 
 Template.layout.created = function() {
-  Meteor.Loader.loadJs("https://www.rdio.com/api/api.js?client_id=6_TnF7zv2TXtq30JW1w2xA",
-    function() {
-      console.log('loaded');
-      R.ready(function() {
-        R.player.on("change:playingTrack", function(track) {
-          Audio.pause();
-          console.log(track);
-        });
-      });
-  });
   Session.set('soundsLoaded', false);
+  Session.set('rdioLoaded', false);
 };
 

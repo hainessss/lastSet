@@ -2,7 +2,7 @@ Playlists = new Meteor.Collection('playlists');
 
 Playlists.allow({
   update: function(userId, doc) {
-    return !! userId;
+    return doc && doc.userId === userId;
   }
 });
 
@@ -24,7 +24,8 @@ Meteor.methods({
       collaborators: [],
       FB_id: user.services.facebook.id,
       private: false,
-      nowPlaying: null
+      nowPlaying: null,
+      nowPlayingTrackPosition: 0
     });
 
     var playlistId = Playlists.insert(playlist);

@@ -65,20 +65,31 @@
                     <div class="row side-row">
                       <h3>Channels</h3>
                       <ul class="playlist-name">
-                          {{#if scUser}}
-                            <li>
-                            <div id='soundcloud-form'>
-                              <form class="search">
-                                <input type="text" name="addPlaylist" placeholder="Enter Souncloud username" class="search-bar playlist-form" />
-                              </form>
-                            </div>
-                          </li>
-                          {{else}}
-                            <a class="sidebar-link" id="scUser" href="{{pathFor 'favorites'}}">Soundcloud</a>
-                          {{/if}}
-                        <li>
-                          <a class="sidebar-link" id="rdioUser" href="#">Rdio</a>
+                        {{#if scUser}}
+                          <li>
+                          <div id='soundcloud-form'>
+                            <form class="search">
+                              <input type="text" name="addPlaylist" placeholder="Enter Souncloud username" class="search-bar playlist-form" />
+                            </form>
+                          </div>
                         </li>
+                        {{else}}
+                          <li>
+                            <a class="sidebar-link" id="scUser" href="{{pathFor 'favorites'}}">Soundcloud</a>
+                          </li>
+                        {{/if}}
+                          <li>
+                            <a class="sidebar-link" id="hypemUser" href="{{pathFor 'hypem'}}">Hype Machine</a>
+                          </li>
+                        {{#if rdioUser}}
+                          <li>
+                            <a class="sidebar-link" href="{{pathFor 'rdio'}}">Rdio</a>
+                          </li>
+                        {{else}}
+                          <li>
+                            <a class="sidebar-link inactive" id="rdioUser" href="#">Rdio</a>
+                          </li>
+                        {{/if}}
                       </ul>
                     </div>
                     <div class="row side-row">

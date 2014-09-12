@@ -26,10 +26,14 @@ Meteor.publish('comments', function(playlistId) {
   return Comments.find({playlistId: playlistId});
 });
 
+Meteor.publish('hypes', function(userId) {
+  return Hypes.find({userId: userId});
+});
+
 Meteor.publish("userData", function () {
   if (this.userId) {
     return Meteor.users.find({_id: this.userId},
-                             {fields: {'services.facebook.id': true, 'scUser': true}});
+                             {fields: {'services.facebook.id': true, 'scUser': true, 'rdioUser': true}});
   } else {
     this.ready();
   }

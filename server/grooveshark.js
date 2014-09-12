@@ -1,5 +1,5 @@
 Meteor.methods({
-  getGroove: function(songInfo, song) {
+  getGroove: function(songInfo) {
     var GS = Meteor.require("grooveshark-streaming");
     var url = Meteor.sync(function(done) {
       GS.Grooveshark.getStreamingUrl(songInfo.SongID, function(err, streamUrl) {

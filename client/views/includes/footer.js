@@ -15,22 +15,42 @@ Template.footer.helpers({
     if (Session.get('nowPlaying')) {
       return Playlists.findOne(Session.get('nowPlaying')).nowPlaying;
     }
+  },
+
+  nowPlayingTrackPosition: function() {
+    if (Session.get('nowPlaying')) {
+      return Playlists.findOne(Session.get('nowPlaying')).nowPlayingTrackPosition + "%";
+    }
   }
 });
 
 
 Template.footer.events({
   'click #forward': function(e) {
-    $('audio').trigger("ended");
+    var index = Session.get('currentTrack');
+    index++;
+    Session.set('currentTrack', index)
+    playTrack(index);
   },
 
   'click .play': function() {
     var playing = Session.get('playing');
+    var index = Session.get('currentTrack');
 
-    if(playing) {
-      $('audio')[0].pause();
+    if(Queue.getMediaType(index)) {
+      if(playing) {
+        $('audio')[0].pause();
+      } else {
+        $('audio')[0].play();
+      }
     } else {
-      $('audio')[0].play();
+      if(playing) {
+        Session.set('playing', false);
+        R.player.togglePause();
+      } else {
+        Session.set('playing', true);
+        R.player.togglePause();
+      }
     }
   },
 

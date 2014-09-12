@@ -78,15 +78,18 @@ Template.playlist.events({
 });
 
 
+
+//checks the radio buttons if a playlist has been set to private
+//also it resets the tune-in function
 Template.playlist.rendered = function() {
-  var playlistId = this.find('#playlist').dataset.id;
-  var playlist = Playlists.findOne({_id: playlistId});
+    var playlistId = this.find('#playlist').dataset.id;
+    var playlist = Playlists.findOne({_id: playlistId});
 
-  if (playlist.private) {
-    $('#private').addClass('checked');
-  }
+    if (playlist.private) {
+      $('#private').addClass('checked');
+    }
 
-  if(Session.get('tuneIn')) {
-    $('#tune').trigger('click');
-  }
+    if(Session.get('tuneIn')) {
+      $('#tune').trigger('click');
+    }
 };

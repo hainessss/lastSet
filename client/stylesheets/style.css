@@ -23,6 +23,10 @@ p {
   color: white;
 }
 
+.sidebar-link.inactive {
+  color: #7f8c8d;
+}
+
 h1 {
   color: #bdc3c7;
   font-size: 2.5em;

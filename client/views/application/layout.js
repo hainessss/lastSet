@@ -22,6 +22,7 @@ Queue = {
     //simple check to see whether or not playlistId is an _.id hash
     if(playlistId.length > 10) {
       this.tracks = Tracks.find({pid: playlistId}).fetch();
+      // Session.set('currentPlaylist', playlistId);
     } else {
       this.tracks = Sounds.find({type: playlistId}).fetch();
     }

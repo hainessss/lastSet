@@ -13,7 +13,8 @@
                     <!-- /.dropdown -->
                     <li class="dropdown">
                         <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Add<span class="caret"></span></button>
-                         <ul class="dropdown-menu dropdown-alerts">
+                        <span class="dropdown-arrow"></span>
+                        <ul class="dropdown-menu dropdown-alerts">
                            {{#each playlists}}
                              <li>
                                  <a class="playlist-dropdown" data-pid={{_id}} data-soundId={{../soundId}} role="menuitem" tabindex="-1" href="{{pathFor 'playlist'}}">{{name}}</a>

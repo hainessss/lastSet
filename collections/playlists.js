@@ -6,6 +6,11 @@ Playlists.allow({
   }
 });
 
+toTitleCase = function(str) {
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
+
 Meteor.methods({
   createPlaylist: function(playlistData) {
     var user = Meteor.user();
@@ -17,6 +22,8 @@ Meteor.methods({
     if(!playlistData.name) {
       throw new Meteor.Error(422, "Please give your playlist a name");
     }
+
+    playlistData.name = toTitleCase(playlistData.name);
 
     var playlist = _.extend(_.pick(playlistData, 'name'), {
       userId: user._id,

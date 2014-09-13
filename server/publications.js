@@ -1,5 +1,5 @@
-Meteor.publish('tracks', function() {
-  return Tracks.find();
+Meteor.publish('tracks', function(playlistId) {
+  return Tracks.find({pid: playlistId});
 });
 
 Meteor.publish('playlists', function(userId) {
@@ -20,14 +20,6 @@ Meteor.publish('friendsPlaylists', function(userList) {
 
 Meteor.publish('notifications', function(userId) {
   return Notifications.find({userId: userId, read: false});
-});
-
-Meteor.publish('comments', function(playlistId) {
-  return Comments.find({playlistId: playlistId});
-});
-
-Meteor.publish('hypes', function(userId) {
-  return Hypes.find({userId: userId});
 });
 
 Meteor.publish("userData", function () {

@@ -12,7 +12,7 @@ Template.friend.events({
 
     Meteor.call('addCollaborator', playlistId, false, adminId, joinerId, function(error, result) {
       if (error) {
-        return alert(error.reason);
+        throwError(error.reason);
       }
     });
   }

@@ -24,6 +24,7 @@ Template.playlist.helpers({
 });
 
 Template.playlist.events({
+  //delete playlist event handler
   'click .delete': function(e) {
 
     if (confirm("Are you sure you want to delete this playlist?")) {
@@ -32,26 +33,28 @@ Template.playlist.events({
 
       Meteor.call('deletePlaylist', playlistId, playlistAdminId, function(error, result) {
         if (error) {
-          return alert(error.reason);
+          throwError(error.reason);
+        } else {
+          Router.go('home');
         }
       });
-
-      Router.go('favorites');
     }
   },
 
+  //leave colloboration event handler
   'click .leave': function(e) {
     if (confirm("Are you sure you want to leave this playlist?")) {
       var playlistId = this._id;
 
       Meteor.call('leavePlaylist', playlistId, function(error, result) {
         if (error) {
-          return alert(error.reason);
+          throwError(error.reason);
         }
       });
     }
   },
 
+  //toggles the authorization of a playlist
   'click #private': function(e) {
     if(this.private) {
       $('#private').removeClass('checked');
@@ -62,6 +65,7 @@ Template.playlist.events({
     }
   },
 
+  //toggles the tune-in feature
   'click #tune': function(e) {
     e.preventDefault();
 

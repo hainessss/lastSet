@@ -91,6 +91,7 @@ playTrack = function(currentTrack) {
   }
 };
 
+//clears progress bar
 killProgress = function() {
   if (Session.get('timeoutId')) {
     clearTimeout(Session.get('timeoutId'));
@@ -98,13 +99,12 @@ killProgress = function() {
   Session.set('timeoutId', false);
 }
 
-
+//initiate progress bar
 updateProgress = function() {
-  //find duration of current track and convert to seconds
   var max = Queue.tracks[Session.get('currentTrack')].duration;
   var increment = 100 / max;
 
-  if((Queue.progress < 99) && (Session.get('playing'))) {
+  if((Queue.progress < 100) && (Session.get('playing'))) {
     Queue.progress += increment;
     $('#progress').css('width', Queue.progress + '%');
     Session.set('timeoutId', setTimeout(updateProgress, 1000));
@@ -145,21 +145,19 @@ Template.layout.helpers({
 
 
 Template.layout.events({
+  //plays track. identifies current playlist and track index and updates queue and index
   'click .track-link': function(e){
     e.preventDefault();
-
-    //clears progress bar
-
 
     var playlistId = $(e.currentTarget).parents('#playlist').attr("data-id");
     Queue.update(playlistId);
     var currentTrack = $(e.currentTarget).parents('#playlist').find('.track-link').index(e.currentTarget);
     Session.set('currentTrack', currentTrack);
 
-
     playTrack(currentTrack);
   },
 
+  //create new playlist
   'submit #playlist-form form': function(e) {
     e.preventDefault();
     Session.set('activeForm', true);
@@ -171,14 +169,15 @@ Template.layout.events({
     Meteor.call('createPlaylist', playlist, function(error, id) {
       if (error) {
         throwError(error.reason);
+      } else {
+        Router.go('playlist', {_id: id})
       }
-
-      Router.go('playlist', {_id: id})
     });
 
     Session.set('activeForm', false);
   },
 
+  //calls search across soundcloud and rdio api
   'submit #song-search form': function(e) {
     e.preventDefault();
     Session.set('searchLoaded', false);
@@ -193,16 +192,15 @@ Template.layout.events({
 
     if (R.currentUser.attributes.canStreamHere) {
       Meteor.call('searchRdio', query, function(result) {
-
+        Session.set('searchLoaded', true);
       });
     }
 
     Router.go('search');
   },
 
+  //toggles the display of the create playlist form
   'click #add-playlist': function(e) {
-    e.preventDefault();
-
     if(Session.get('activeForm')) {
       Session.set('activeForm', false);
     } else {
@@ -211,8 +209,8 @@ Template.layout.events({
     }
   },
 
+  //determines wether a user has entered their soundcloud username
   'click #scUser': function(e) {
-    e.preventDefault();
     var scUser = Meteor.user().scUser;
 
     if (scUser) {
@@ -222,6 +220,7 @@ Template.layout.events({
     }
   },
 
+  //authenticates the rdio api and saves rdio username
   'click #rdioUser': function(e) {
     e.preventDefault();
 
@@ -231,12 +230,17 @@ Template.layout.events({
         Session.set('rdioUser', true);
 
         Meteor.call('addRdioUsername', username, function(error, result) {
-          Router.go('rdio');
+          if(error) {
+            throwError(error.reason);
+          } else {
+            Router.go('rdio');
+          }
         });
       }
     });
   },
 
+  //gets soundcloud username form user
   'submit #soundcloud-form form': function(e) {
     e.preventDefault();
 
@@ -245,19 +249,21 @@ Template.layout.events({
     }
 
     Meteor.call('addScUsername', username, function(error, result) {
-      Router.go('favorites');
-      Session.set('scUser', false);
+      if(error) {
+        throwError(error.reason);
+      } else {
+        Router.go('favorites');
+        Session.set('scUser', false);
+      }
     });
   },
 
   'click .notification': function(e) {
-    Meteor.call('clearNotifications', function(error, result) {
-
-    });
+    Meteor.call('clearNotifications');
   }
 });
 
-
+//clears session memory in regards to below variables
 Template.layout.created = function() {
   Session.set('soundsLoaded', false);
   Session.set('rdioLoaded', false);

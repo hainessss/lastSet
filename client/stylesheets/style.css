@@ -134,6 +134,14 @@ h4 {
   margin: 0 auto 0 auto;
 }
 
+.alert-error {
+  background-color: rgba(192,57,43,0.5);
+  border: 1px solid #c0392b;
+  margin-bottom: 0;
+  margin-top: 15px;
+  color: #bdc3c7;
+  font-size: 0.9em;
+}
 
 .footer {
   background-color: rgba(189,195,199,0.5);

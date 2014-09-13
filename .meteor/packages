@@ -5,7 +5,6 @@
 
 standard-app-packages
 http
-iron-router
 spin
 accounts-facebook
 accounts-ui
@@ -15,3 +14,4 @@ rdio
 external-file-loader
 flat-ui-less
 natestrauser:font-awesome
+mrt:iron-router-progress

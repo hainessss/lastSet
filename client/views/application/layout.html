@@ -20,36 +20,40 @@
                 <li>
                   <div id='song-search'>
                     <form class="search">
-                        <input type="text" placeholder="Search here" class="search-bar" />
+                        <input type="text" placeholder="Search music here" class="search-bar" />
                     </form>
                   </div>
                 </li>
 
 
                 <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a id="notifications-dropdown" class="dropdown-toggle" data-toggle="dropdown" href="#">
-                      {{#if notificationsCount}}
-                        <i class="fa fa-fw"><span class="navbar-new">{{notificationsCount}}</span></i>  <i class="fa fa-caret-down"></i>
-                      {{else}}
-                        <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
-                      {{/if}}
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                      {{#if notificationsCount}}
-                        {{#each notifications}}
-                          {{> notification}}
-                        {{/each}}
-                      {{else}}
-                        <li><a href='#'>No new notifications</a></li>
-                      {{/if}}
-                    </ul>
-                    <!-- /.dropdown-alerts -->
-                </li>
+                {{#if currentUser}}
+                  <li class="dropdown">
+                      <a id="notifications-dropdown" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        {{#if notificationsCount}}
+                          <i class="fa fa-fw"><span class="navbar-new">{{notificationsCount}}</span></i>  <i class="fa fa-caret-down"></i>
+                        {{else}}
+                          <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        {{/if}}
+                      </a>
+                      <ul class="dropdown-menu dropdown-alerts">
+                        {{#if notificationsCount}}
+                          {{#each notifications}}
+                            {{> notification}}
+                          {{/each}}
+                        {{else}}
+                          <li><a href='#'>No new notifications</a></li>
+                        {{/if}}
+                      </ul>
+                      <!-- /.dropdown-alerts -->
+                  </li>
+                {{/if}}
                 <!-- /.dropdown -->
-                <li>
-                  <a href="{{pathFor 'friends'}}">Friends</a>
-                </li>
+                {{#if currentUser}}
+                  <li>
+                    <a href="{{pathFor 'friends'}}">Friends</a>
+                  </li>
+                {{/if}}
                 <li>
                     <a href="#">About</a>
                 </li>
@@ -64,48 +68,51 @@
                 <div class="sidebar-nav navbar-collapse">
                     <div class="row side-row">
                       <h3>Channels</h3>
-                      <ul class="playlist-name">
-                        {{#if scUser}}
-                          <li>
-                          <div id='soundcloud-form'>
-                            <form class="search">
-                              <input type="text" name="addPlaylist" placeholder="Enter Souncloud username" class="search-bar playlist-form" />
-                            </form>
-                          </div>
-                        </li>
-                        {{else}}
-                          <li>
-                            <a class="sidebar-link" id="scUser" href="{{pathFor 'favorites'}}">Soundcloud</a>
+                      {{#if currentUser}}
+                        <ul class="playlist-name">
+                          {{#if scUser}}
+                            <li>
+                            <div id='soundcloud-form'>
+                              <form class="search">
+                                <input type="text" name="addPlaylist" placeholder="Enter Souncloud username" class="search-bar playlist-form" />
+                              </form>
+                            </div>
                           </li>
-                        {{/if}}
-                          <li>
-                            <a class="sidebar-link" id="hypemUser" href="{{pathFor 'hypem'}}">Hype Machine</a>
-                          </li>
-                        {{#if rdioUser}}
-                          <li>
-                            <a class="sidebar-link" href="{{pathFor 'rdio'}}">Rdio</a>
-                          </li>
-                        {{else}}
-                          <li>
-                            <a class="sidebar-link inactive" id="rdioUser" href="#">Rdio</a>
-                          </li>
-                        {{/if}}
-                      </ul>
+                          {{else}}
+                            <li>
+                              <a class="sidebar-link" id="scUser" href="{{pathFor 'favorites'}}">Soundcloud</a>
+                            </li>
+                          {{/if}}
+                          {{#if rdioUser}}
+                            <li>
+                              <a class="sidebar-link" href="{{pathFor 'rdio'}}">Rdio</a>
+                            </li>
+                          {{else}}
+                            <li>
+                              <a class="sidebar-link inactive" id="rdioUser" href="#">Rdio</a>
+                            </li>
+                          {{/if}}
+                        </ul>
+                      {{/if}}
                     </div>
                     <div class="row side-row">
                       <h3>Playlists <span class="add"><a id="add-playlist" href="#">+</a></span></h3>
                       <ul class="playlist-name">
-                        {{#each playlists}}
-                          {{> playlistName}}
-                        {{/each}}
-                        {{#if activeForm}}
-                          <li>
-                            <div id='playlist-form'>
-                              <form class="search">
-                                <input type="text" name="addPlaylist" placeholder="Create playlist" class="search-bar playlist-form" />
-                              </form>
-                            </div>
-                          </li>
+                        {{#if currentUser}}
+                          {{#each playlists}}
+                            {{> playlistName}}
+                          {{/each}}
+                          {{#if activeForm}}
+                            <li>
+                              <div id='playlist-form'>
+                                <form class="search">
+                                  <input type="text" name="addPlaylist" placeholder="Create playlist" class="search-bar playlist-form" />
+                                </form>
+                              </div>
+                            </li>
+                          {{/if}}
+                        {{else}}
+                          <li>Sign in to begin!</li>
                         {{/if}}
                       </ul>
                     </div>
@@ -124,7 +131,8 @@
         </nav>
 
         <div id="page-wrapper">
-        <audio id="audio" preload="auto" tabindex="0" controls=""></audio>
+        <audio id="audio" preload="auto" tabindex="0"></audio>
+            {{> errors}}
             {{> yield}}
 
             {{> footer}}

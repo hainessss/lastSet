@@ -17,7 +17,7 @@ Template.notification.events({
 
     Meteor.call('addCollaborator', playlistId, accept, playlistAdminId, joinerId, function(error, result) {
       if (error) {
-        return alert(error.reason);
+        throwError(error.reason);
       }
     });
   },

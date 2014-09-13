@@ -33,6 +33,7 @@ Meteor.methods({
     return playlistId;
   },
 
+  //script deletes playlist
   deletePlaylist: function(playlistId, playlistAdminId) {
     var user = Meteor.user();
     var ownsPlaylist = function(userId, pfAdminId) {
@@ -51,6 +52,7 @@ Meteor.methods({
     var playlistId = Playlists.remove(playlistId);
   },
 
+  //this script adds a collaborator to a playlist
   addCollaborator: function(playlistId, override, playlistAdminId, joinerId) {
     var user = Meteor.user();
     var playlist = Playlists.findOne({_id: playlistId});

@@ -42,6 +42,18 @@
     </div>
   {{/if}}
 
+  {{#unless isCollaborator}}
+    {{#unless ownPlaylist}}
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel search panel-default box-shadow">
+            <p>This is a private playist, the owner will have to accept your request to join.</p>
+          </div>
+        </div>
+      </div>
+    {{/unless}}
+  {{/unless}}
+
   <div id='playlist' data-id="{{_id}}">
     {{#each tracks}}
       {{> track}}

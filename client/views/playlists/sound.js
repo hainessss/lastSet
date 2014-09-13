@@ -14,10 +14,13 @@ Template.sound.events({
     Meteor.call('addPlaylistTrack',
       this._id, sound, function(error, result) {
       if (error) {
-        return alert(error.reason);
+        throwError(error.reason);
+      } else {
+        //updates queue if the sound was added to a playlist that is currently playing
+        if (result === Queue.playlistId) {
+          Queue.update(result);
+        }
       }
-
-      Queue.update();
     });
   }
 });

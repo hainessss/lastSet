@@ -1,8 +1,4 @@
 Template.track.helpers({
-  comments: function() {
-    return Comments.find({trackId: this._id});
-  },
-
   playlists: function() {
     return Playlists.find();
   }
@@ -18,10 +14,13 @@ Template.track.events({
     Meteor.call('addPlaylistTrack',
       this._id, track, function(error, result) {
       if (error) {
-        return alert(error.reason);
+        throwError(error.reason);
+      } else {
+        //updates Queue if it the playlist a song was added to is currently playing
+        if (result === Queue.playlistId) {
+          Queue.update(result);
+        }
       }
-
-      Queue.update();
     });
   }
 });

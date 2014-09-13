@@ -9,7 +9,8 @@
       "rdio": {},
       "external-file-loader": {},
       "flat-ui-less": {},
-      "bootstrap-3": {}
+      "bootstrap-3": {},
+      "iron-router-progress": {}
     },
     "packages": {
       "iron-router": {
@@ -51,6 +52,11 @@
         "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
         "tag": "v3.2.0-1",
         "commit": "17a63902fc6cf1096c5289d963c66cf28b474727"
+      },
+      "iron-router-progress": {
+        "git": "https://github.com/Multiply/iron-router-progress.git",
+        "tag": "v0.4.1",
+        "commit": "496fcda9a6ec352b4733725f60c6f280250c3541"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",

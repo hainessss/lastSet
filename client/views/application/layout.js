@@ -2,10 +2,23 @@
 Queue = {
   tracks: [],
   playlistId: null,
-  progress: 0,
+
+  playlistOwner: function() {
+    if(this.playlistId.length > 10) {
+      return Playlists.findOne(this.playlistId).userId;
+    }
+  },
 
   get: function() {
     return this.tracks;
+  },
+
+  isTrack: function(index) {
+    if (this.tracks[index].type === 'track') {
+      return true;
+    } else {
+      return false;
+    }
   },
 
   getMediaType: function(index) {
@@ -22,35 +35,52 @@ Queue = {
     //simple check to see whether or not playlistId is an _.id hash
     if(playlistId.length > 10) {
       this.tracks = Tracks.find({pid: playlistId}).fetch();
-      // Session.set('currentPlaylist', playlistId);
+      Session.set('currentPlaylist', playlistId);
     } else {
       this.tracks = Sounds.find({type: playlistId}).fetch();
+      Session.set('currentPlaylist', playlistId);
     }
   }
 };
 
+
 Template.layout.rendered = function() {
+  $('.navbar-collapse').addClass('collapse');
+
+
+  //automatically updates que when track is added.
+  Tracker.autorun(function() {
+    if (Session.get('currentPlaylist').length > 10) {
+      Queue.tracks = Tracks.find({pid: Session.get('currentPlaylist')}).fetch();
+    }
+  });
+
   //html5 player logic
   Audio = $('audio').bind('play', function() {
             Session.set('playing', true);
 
-            //initiate progress bar
-            updateProgress();
-            Session.set('nowPlaying', false);
-
             //set album art and update playlist with current song
             Session.set('albumArt', Queue.tracks[Session.get('currentTrack')].artwork_url);
-            Playlists.update(Queue.playlistId, {$set: {nowPlaying: Queue.tracks[Session.get('currentTrack')]}});
+
+            if (Queue.isTrack(Session.get('currentTrack')) && Queue.playlistOwner() === Meteor.userId()) {
+              Playlists.update(Queue.playlistId, {$set: {nowPlaying: Queue.tracks[Session.get('currentTrack')]}});
+            }
           }).bind('pause', function() {
             Session.set('playing', false);
-            killProgress();
           }).bind('error', function() {
             $('audio').trigger("ended");
           }).bind('timeupdate', function() {
-            Playlists.update(Queue.playlistId, {$set: {nowPlayingTrackPosition: Queue.progress}});
+            var progress = ((this.currentTime/this.duration) * 100) + '%';
+            Session.set('progress', progress);
+            addPlayingClass();
+
+            if (Queue.isTrack(Session.get('currentTrack')) && Queue.playlistOwner() === Meteor.userId()) {
+              Playlists.update(Queue.playlistId, {$set: {nowPlayingTrackPosition: progress}});
+            }
           }).bind('ended', function() {
-            Queue.progress = 0;
             Session.set('playing', false);
+            $('#playlist').find('.track:eq(' + Session.get('currentTrack') + ')').removeClass('playingTrack');
+
             if((Session.get('currentTrack') + 1) < Queue.tracks.length) {
                 var index = Session.get('currentTrack');
                 index++;
@@ -61,57 +91,38 @@ Template.layout.rendered = function() {
                 index = 0;
                 loadTrack(index);
             }
-  }).get(0);
-}
+      }).get(0);
 
-loadTrack = function(currentTrack) {
-  // $('.plSel').removeClass('plSel');
-  // $('#plUL li:eq(' + id + ')').addClass('plSel');
-  // npTitle.text(tracks[id].name);
-  // index = id;
+  //adds playing class
+  addPlayingClass = function() {
+    var playlistId = $('#playlist').attr("data-id");
 
-  Session.set('currentTrack', currentTrack);
-  Audio.src = Queue.tracks[Session.get('currentTrack')].track_url;
-};
-
-playTrack = function(currentTrack) {
-  //resets progress bar
-  Queue.progress = 0;
-  killProgress();
-
-  var track = Queue.tracks[currentTrack];
-
-  //determines wether to use HTML5 audio api or Rdio API
-  if (track.track_url) {
-    R.player.pause();
-    loadTrack(currentTrack);
-    Audio.play();
-  } else {
-    Audio.pause();
-    R.player.play({source: track.soundId});
+    if (Queue.playlistId === playlistId) {
+      $('#playlist').find('.track:eq(' + Session.get('currentTrack') + ')').addClass('playingTrack');
+    }
   }
-};
 
-//clears progress bar
-killProgress = function() {
-  if (Session.get('timeoutId')) {
-    clearTimeout(Session.get('timeoutId'));
-  }
-  Session.set('timeoutId', false);
-}
+  //loads a track into the html5 api
+  loadTrack = function(currentTrack) {
+    Session.set('currentTrack', currentTrack);
+    Audio.src = Queue.tracks[Session.get('currentTrack')].track_url;
+  };
 
-//initiate progress bar
-updateProgress = function() {
-  var max = Queue.tracks[Session.get('currentTrack')].duration;
-  var increment = 100 / max;
+  //plays a track on either html5 of Rdio API
+  playTrack = function(currentTrack) {
+    var track = Queue.tracks[currentTrack];
+    Session.set('playingTrack', track);
 
-  if((Queue.progress < 100) && (Session.get('playing'))) {
-    Queue.progress += increment;
-    $('#progress').css('width', Queue.progress + '%');
-    Session.set('timeoutId', setTimeout(updateProgress, 1000));
-  } else {
-    return;
-  }
+    //determines wether to use HTML5 audio api or Rdio API
+    if (track.track_url) {
+      R.player.pause();
+      loadTrack(currentTrack);
+      Audio.play();
+    } else {
+      Audio.pause();
+      R.player.play({source: track.soundId});
+    }
+  };
 };
 
 Template.layout.helpers({
@@ -150,9 +161,15 @@ Template.layout.events({
   'click .track-link': function(e){
     e.preventDefault();
 
+    //overrides tune in feature
+    if (Session.get('tuneIn')) {
+      $('#tune').trigger('click');
+    }
+
     var playlistId = $(e.currentTarget).parents('#playlist').attr("data-id");
     Queue.update(playlistId);
     var currentTrack = $(e.currentTarget).parents('#playlist').find('.track-link').index(e.currentTarget);
+    $('#playlist').find('.track:eq(' + Session.get('currentTrack') + ')').removeClass('playingTrack');
     Session.set('currentTrack', currentTrack);
 
     playTrack(currentTrack);
@@ -186,6 +203,7 @@ Template.layout.events({
     Sounds.remove({type: 'search'});
 
     var query = $(e.target).find('input').val();
+    $(e.target).find('input').val('');
 
     Meteor.call('searchSounds', query, function(error, result) {
       Session.set('searchLoaded', true);
@@ -268,5 +286,10 @@ Template.layout.events({
 Template.layout.created = function() {
   Session.set('soundsLoaded', false);
   Session.set('rdioLoaded', false);
+  Session.set('progress', 0 + '%');
+  Session.set('albumArt', null);
+  Session.set('playingTrack', null);
+  Session.set('playing', null);
+  Session.set('currentPlaylist', 'none');
 };
 

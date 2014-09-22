@@ -17,10 +17,18 @@ Template.footer.helpers({
     }
   },
 
+  progress: function() {
+    return Session.get('progress');
+  },
+
   nowPlayingTrackPosition: function() {
     if (Session.get('nowPlaying')) {
       return Playlists.findOne(Session.get('nowPlaying')).nowPlayingTrackPosition + "%";
     }
+  },
+
+  playingTrack: function() {
+    return Session.get('playingTrack');
   }
 });
 
@@ -28,12 +36,13 @@ Template.footer.helpers({
 Template.footer.events({
   'click #forward': function(e) {
     var index = Session.get('currentTrack');
+    $('#playlist').find('.track:eq(' + index + ')').removeClass('playingTrack');
     index++;
     Session.set('currentTrack', index)
     playTrack(index);
   },
 
-  'click .play': function() {
+  'click #play, click #pause': function() {
     var playing = Session.get('playing');
     var index = Session.get('currentTrack');
 
@@ -54,8 +63,9 @@ Template.footer.events({
     }
   },
 
-  'click #back': function() {
+  'click #backward': function() {
     var index = Session.get('currentTrack');
+    $('#playlist').find('.track:eq(' + index + ')').removeClass('playingTrack');
     index--;
     Session.set('currentTrack', index)
     playTrack(index);

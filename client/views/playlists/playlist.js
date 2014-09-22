@@ -20,6 +20,10 @@ Template.playlist.helpers({
     var playlist = Playlists.findOne({_id: this._id});
     Session.set('nowPlaying', playlist.nowPlaying);
     return playlist.nowPlaying;
+  },
+
+  trackCount: function() {
+    return Tracks.find({pid: this._id}, {sort: {submitted: 1}}).count();
   }
 });
 
@@ -68,6 +72,8 @@ Template.playlist.events({
   //toggles the tune-in feature
   'click #tune': function(e) {
     e.preventDefault();
+    $('audio')[0].pause();
+    R.player.pause();
 
     if(Session.get('tuneIn')) {
       Session.set('tuneIn', false);

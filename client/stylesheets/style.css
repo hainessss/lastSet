@@ -15,6 +15,15 @@ body {
   background-color: #34495e;
 }
 
+.sidebar {
+  width: 100%;
+  top: 125px;
+}
+
+#login-buttons {
+  margin: 10px 10px;
+}
+
 p {
   color: white;
 }
@@ -47,6 +56,10 @@ h4 {
   font-size: 0.8em;
 }
 
+.navbar-right .dropdown-menu {
+  right: 0;
+  left: auto;
+}
 
 .playlist-name {
   color: white;
@@ -54,6 +67,7 @@ h4 {
 }
 
 .page-header {
+  position: relative;
   display: inline-block;
   margin-top: 25px;
   border-bottom: 1px solid #34495e;
@@ -69,21 +83,16 @@ h4 {
   padding-left: 0;
   padding-right: 0;
   padding-bottom: 15px;
-  margin-left: 15px;
-  margin-right: 15px;
-  margin-bottom: 20px;
+  margin-left: 3px;
+  margin-right: 3px;
+  margin-bottom: 15px;
 }
 
-#play {
-  width: 80px;
-  margin: 20px auto;
+.col-lg-12 {
+  padding-left: 0;
+  padding-right: 0;
 }
 
-#pause {
-  width: 80px;
-  height: 93px;
-  margin: 20px auto;
-}
 
 #track-play {
   width: 20px;
@@ -104,9 +113,15 @@ h4 {
 #control {
   margin-left: 20px;
   margin-right: 20px;
-  width: 60px;
+  width: 50px;
 }
 
+.side-row {
+  position: relative;
+  display: block;
+  float: left;
+  clear: both;
+}
 
 .add {
   font-size: 1em;
@@ -126,14 +141,6 @@ h4 {
   font-size: 0.7em;
 }
 
-.controls {
-  width: 300px;
-  height: 100%;
-  position: relative;
-  display: block;
-  margin: 0 auto 0 auto;
-}
-
 .alert-error {
   background-color: rgba(192,57,43,0.5);
   border: 1px solid #c0392b;
@@ -145,9 +152,9 @@ h4 {
 
 .footer {
   background-color: rgba(189,195,199,0.5);
-  height: 150px;
+  height: 100px;
   bottom: 0;
-  left: 150px;
+  left: 100px;
   position: fixed;
   right: 0;
   z-index: 0;
@@ -155,9 +162,113 @@ h4 {
   padding-right: 0;
 }
 
+.controls {
+  width: 192px;
+  vertical-align: middle;
+  margin: 0 auto;
+}
+
+.intro {
+  clear: both;
+  text-align: center;
+}
+
+.intro p strong {
+  color: #16a085;
+}
+
+.intro p {
+  font-weight: 100;
+}
+
+.navbar-brand {
+  width: 150px;
+  height: 50px;
+  margin-left: 20px;
+  vertical-align: middle;
+  background-image: url('/images/lastSet.png');
+  background-size: 150px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.splash {
+  width: 300px;
+  margin: 0 auto;
+}
+
+#hero {
+  float: left;
+  width: 100%;
+  height: 300px;
+  background-image: url('/images/setlist.png');
+  background-size: 250px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#forward {
+  margin-top: 10px;
+  vertical-align: middle;
+  float: left;
+  width: 60px;
+  height: 40px;
+  background-image: url('/images/forward-button.png');
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#backward {
+  margin-top: 10px;
+  vertical-align: middle;
+  float: left;
+  width: 60px;
+  height: 40px;
+  background-image: url('/images/back-button.png');
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#play {
+  float: left;
+  width: 70px;
+  height: 60px;
+  background-image: url('/images/play.png');
+  background-size: 60px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#pause {
+  float: left;
+  width: 70px;
+  height: 60px;
+  background-image: url('/images/pause.png');
+  background-size: 50px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 #iron-router-progress {
     background-color: #1abc9c;
     box-shadow: 0 0 5px #1abc9c;
+}
+
+.dropdown {
+  height: 100%;
+}
+
+.footer-track-info {
+  color: #2c3e50;
+  text-align: center;
+  font-size: 0.7em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.1;
+  margin-top: 10px;
 }
 
 .dropdown-menu {
@@ -177,6 +288,18 @@ h4 {
 
 .btn.btn-danger.leave {
   background-color: #2980b9;
+}
+
+.btn-primary.option {
+  border: 4px solid #bdc3c7;
+  background-color: #34495e;
+  color: #bdc3c7;
+}
+
+.btn-primary.checked {
+  border: 4px solid #16a085;
+  background-color: #34495e;
+  color: #16a085;
 }
 
 button#accept {
@@ -205,11 +328,17 @@ button#accept i, button#deny i {
 }
 
 ul li p {
-  color: rgba(52, 73, 94, 0.75);
+  color: white;
   font-size: 14px;
+  font-weight: light;
   margin-bottom: 0px;
   padding-left: 20px;
+  padding-right: 20px;
   clear: both;
+}
+
+ul li p strong {
+  color: #16a085;
 }
 
 ul li #alternate {
@@ -227,7 +356,7 @@ ul li #alternate {
 }
 
 #album-art {
-  width: 150px;
+  width: 100px;
 }
 
 .panel.track {
@@ -252,12 +381,15 @@ ul li #alternate {
   text-align: center;
 }
 
+.panel-body {
+  height: 100%;
+}
+
 .dropdown-toggle.friend-dropdown span {
   margin-right: 50px;
 }
 
 .panel.search {
-  background-color: #34495e;
   height: 40px;
   border: none;
   padding-left: 0;
@@ -265,7 +397,8 @@ ul li #alternate {
   padding-top: 0;
   border-radius: 4px;
   background-repeat: no-repeat;
-  background-size: 100px
+  background-size: 100px;
+  margin-bottom: 0px;
 }
 
 .panel.search .search-bar {
@@ -277,10 +410,97 @@ ul li #alternate {
 
 }
 
+.track {
+  position: relative;
+  background-color: orange;
+  min-height: 30px;
+  list-style: none;
+  padding: 10px 0px 10px 20px;
+  margin-top: 15px;
+  border-radius: 4px;
+  margin-right: 18px;
+}
+
+.track.owned {
+  background-color: #ecf0f1;
+}
+
+li {
+  display: list-item;
+}
+
+.dropdown-test {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 60px;
+  background-color: black;
+  color: white;
+}
+
+.track-link {
+  display: table;
+  position: relative;
+  padding-right: 10px;
+  text-align: middle;
+}
+
+
+.logo {
+  display: table-cell;
+  vertical-align: middle;
+  width: 55px;
+  background-image: url('/images/SoundCloud_Logo_white.svg');
+  background-size: 50px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.logo.rdioApi {
+  background-image: url('/images/Rdio.png');
+  background-size: 50px;
+}
+
+.logo-track {
+  display: table-cell;
+  vertical-align: middle;
+  width: 55px;
+  background-image: url('/images/play.png');
+  background-size: 25px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.track-info {
+  display: block;
+  vertical-align: middle;
+  display: block;
+  margin-right: 60px;
+  line-height: 1.3;
+  padding-left: 20px;
+}
+
+ul.track-list {
+  padding-left: 0;
+}
+
+.track-info .artist {
+  color: #7f8c8d;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.track-info .name {
+  color: #34495e;
+  font-weight: light;
+}
+
 .artwork {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   background-color: #2c3e50;
   float: left;
   opacity: 1;
@@ -353,6 +573,10 @@ ul li #alternate {
     padding-bottom: 100px;
 }
 
+#login-buttons .login-display-name {
+  margin-right: 0px;
+}
+
 .navbar-new {
   margin-top: 0px;
   margin-right: 22px;
@@ -366,7 +590,7 @@ ul li #alternate {
     margin: auto auto;
     margin-top: 8px;
     margin-left: 20px;
-    min-width: 360px;
+    min-width: 340px;
     height: 40px;
     font-family: sans-serif;
     font-size: 1.3rem;
@@ -377,16 +601,29 @@ ul li #alternate {
 .search-bar.playlist-form {
   margin: 0;
   min-width: 50px;
-  height: 30px;
+  height: 35px;
   margin-top: 2px;
 }
 
 div.track-name {
-  display: inline-block;
+  position: absolute;
   float: left;
   margin-left: 15px;
   margin-top: 7px;
   color: white;
+}
+
+.artist.rdioApi {
+  color: #ecf0f1;
+  font-weight: 500;
+}
+
+#playlist li.playingTrack {
+  background-color: #16a085;
+}
+
+#playlist li.playingTrack .artist {
+  color: #f1f4f5;
 }
 
 .track-title {
@@ -394,8 +631,17 @@ div.track-name {
   color: #2c3e50;
 }
 
+.track.rdioApi {
+  background-color: #2980b9;
+}
+
+.artist-name {
+  position: absolute;
+  width: 100%;
+}
+
 .btn.dropdown-toggle {
-  height: 60px;
+  height: 100%;
   margin: 0 0;
   background-color: #7f8c8d;
   border-radius: 0px 3px 3px 0px;
@@ -410,13 +656,33 @@ div.track-name {
   color: #bdc3c7;
 }
 
+.dropdown-menu li > a:hover {
+  color: #2c3e50;
+}
+
+.navbar-top-links .dropdown-menu li > a:hover {
+  color: #2c3e50;
+}
+
+.navbar-top-links .dropdown-menu li a {
+  color: white;
+}
+
+.navbar-top-links .dropdown-menu li a strong {
+  color: #16a085;
+}
+
 .panel {
- background-color: #f39c12;
- height: 60px;
- border: none;
- border-radius: 4px;
- background-repeat: no-repeat;
- background-size: 100px
+  position: relative;
+  min-height: 50px;
+  border: none;
+  border-radius: 4px;
+  background-repeat: no-repeat;
+  background-size: 100px;
+}
+
+.navbar-right {
+  height: 100%;
 }
 
 .panel-body {
@@ -445,7 +711,12 @@ div.track-name {
     background-color: #34495e;
 }
 
+
 @media(min-width:768px) {
+    .search-bar {
+      margin-left: 0px;
+    }
+
     #page-wrapper {
         position: inherit;
         margin: 0 0 0 250px;
@@ -453,13 +724,134 @@ div.track-name {
         border-left: 1px solid #95a5a6;
     }
 
-    #wrapper {
+    #border {
+      position: fixed;
+      bottom: 0;
+      left: 250px;
+      height: 500px;
+      border-left: 1px solid #95a5a6;
+    }
 
+    .splash {
+      width: 500px;
+      margin: 0 auto;
+    }
+
+    #hero {
+      float: left;
+      width: 100%;
+      height: 450px;
+      background-image: url('/images/setlist.png');
+      background-size: 450px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .controls {
+      width: 192px;
+      vertical-align: middle;
+      margin: 0 auto;
+      margin-top: 15px;
+    }
+
+    #forward {
+      margin-top: 17px;
+      vertical-align: middle;
+      float: left;
+      width: 60px;
+      height: 40px;
+      background-image: url('/images/forward-button.png');
+      background-size: 40px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    #backward {
+      margin-top: 17px;
+      vertical-align: middle;
+      float: left;
+      width: 60px;
+      height: 40px;
+      background-image: url('/images/back-button.png');
+      background-size: 40px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    #play {
+      float: left;
+      width: 70px;
+      height: 75px;
+      background-image: url('/images/play.png');
+      background-size: 60px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    #pause {
+      float: left;
+      width: 70px;
+      height: 75px;
+      background-image: url('/images/pause.png');
+      background-size: 50px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    #album-art {
+      width: 150px;
+    }
+
+    #control {
+      margin-left: 20px;
+      margin-right: 20px;
+      width: 60px;
+    }
+
+    .page-header {
+      position: relative;
+      display: inline-block;
+      margin-top: 25px;
+      border-bottom: 1px solid #34495e;
+    }
+
+    .footer {
+      background-color: rgba(189,195,199,0.5);
+      height: 150px;
+      bottom: 0;
+      left: 150px;
+      position: fixed;
+      right: 0;
+      z-index: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .btn.btn-danger {
+      float: right;
+      margin-top: 30px;
     }
 
     .artwork {
       left: 250px;
       border-left: 1px solid #95a5a6;
+      position: relative;
+      width: 150px;
+      height: 150px;
+      background-color: #2c3e50;
+      float: left;
+      opacity: 1;
+      z-index: -1;
+      bottom: 0;
+      position: fixed;
+      right: 0;
+      z-index: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .track {
+      margin-right: 0px;
     }
 
     .footer {
@@ -562,19 +954,50 @@ div.track-name {
     padding-left: 52px;
 }
 
+
 @media(min-width:768px) {
     .sidebar {
         z-index: 1;
         position: absolute;
         width: 250px;
-        margin-top: 75px;
+        top: 100px;
     }
+
+  .navbar-brand {
+    width: 0;
+    margin-left: 0;
+    padding: 14px 0;
+    visibility: hidden;
+  }
 
     .navbar-top-links .dropdown-messages,
     .navbar-top-links .dropdown-tasks,
     .navbar-top-links .dropdown-alerts {
         margin-left: auto;
     }
+}
+
+@media(min-width:966px) {
+ .navbar-brand {
+  visibility: visible;
+  width: 150px;
+  height: 50px;
+  margin-left: 20px;
+  vertical-align: middle;
+  background-image: url('/images/lastSet.png');
+  background-size: 150px;
+  background-repeat: no-repeat;
+  background-position: center;
+ }
+}
+
+@media(max-width:448px) {
+  .navbar-top-links .dropdown-menu {
+    right: auto;
+    left: 120px;
+ }
+
+
 }
 
 .btn-outline {

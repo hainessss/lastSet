@@ -10,11 +10,15 @@
             <button class="btn btn-primary dropdown-toggle friend-dropdown" data-toggle="dropdown">Join<br><span class="caret"></span></button>
             <span class="dropdown-arrow"></span>
             <ul class="dropdown-menu dropdown-alerts">
+            {{#if playlistCount}}
               {{#each playlists}}
                 <li>
                     <a class="playlist-dropdown" data-pid={{_id}} data-soundId={{../soundId}} role="menuitem" tabindex="-1" href="{{pathFor 'playlist'}}">{{name}}</a>
                 </li>
               {{/each}}
+            {{else}}
+              <li><a href='#'>No owned playlists</a></li>
+            {{/if}}
             </ul>
         </li>
       </ul>

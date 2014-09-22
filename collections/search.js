@@ -5,13 +5,14 @@ Meteor.methods({
       for (var i = 0; i < tracks.length; i++) {
         Sounds.insert(
           {
-            soundId: tracks[i].id,
+            soundId: tracks[i].id.toString(),
             track_url: tracks[i].stream_url + '?client_id=89625b1333ea9f17f401731e84eb3382',
             artist: tracks[i].user.username,
             name: tracks[i].title,
             artwork_url: tracks[i].artwork_url,
             duration: tracks[i].duration * 0.001,
-            type: 'search'
+            type: 'search',
+            source: 'soundcloudApi'
           }
         );
       };
@@ -31,7 +32,8 @@ Meteor.methods({
            name: result[i].title,
            artwork_url: result[i].artwork_url,
            duration: result[i].duration * 0.001,
-           type: 'soundcloud'
+           type: 'soundcloud',
+           source: 'soundcloudApi'
          });
         }
       });
@@ -51,7 +53,7 @@ Meteor.methods({
         success: function(response) {
           var tracks = response.result.results;
           for (var i = 0; i < tracks.length; i++) {
-            Sounds.insert({soundId: tracks[i].key, artist: tracks[i].artist, name: tracks[i].name, artwork_url: tracks[i].icon, duration: tracks[i].duration, type: 'search'});
+            Sounds.insert({soundId: tracks[i].key, artist: tracks[i].artist, name: tracks[i].name, artwork_url: tracks[i].icon, duration: tracks[i].duration, type: 'search', source: 'rdioApi'});
           };
         },
         error: function(response) {

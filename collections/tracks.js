@@ -1,5 +1,6 @@
 Tracks = new Meteor.Collection('tracks');
 
+
 Meteor.methods({
   addPlaylistTrack: function(playlistId, trackData) {
     var user = Meteor.user();
@@ -11,7 +12,7 @@ Meteor.methods({
     }
 
     if(!sound) {
-      throw new Meteor.Error(422, "Your track must have a track to add");
+      throw new Meteor.Error(422, "Your must have a valid track to add");
     }
 
     var track = _.extend(_.pick(sound, 'soundId', 'track_url', 'artist', 'name', 'artwork_url', 'duration'),

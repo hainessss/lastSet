@@ -1,6 +1,10 @@
 Template.friend.helpers({
   playlists: function() {
     return Playlists.find({FB_id: this.id});
+  },
+
+  playlistCount: function() {
+    return Playlists.find({FB_id: this.id}).count();
   }
 });
 

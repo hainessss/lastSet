@@ -1,32 +1,37 @@
 <template name="sound">
-  <div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default box-shadow">
-            <div class="panel-body">
-                <div class="track-name">
-                  <img id="sound-logo" src="images/SoundCloud_Logo_white.svg" />
-                  <a class="track-link" href="{{track_url}}"><h4 class="track-title">{{name}}</h4></a>
-                </div>
-                <div class="track-drop">
-                <ul class="nav navbar-right">
-
-                    <!-- /.dropdown -->
-                    <li class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Add<span class="caret"></span></button>
-                         <ul class="dropdown-menu dropdown-alerts">
-                           {{#each playlists}}
-                             <li>
-                                 <a class="playlist-dropdown" data-pid={{_id}} data-soundId={{../soundId}} role="menuitem" tabindex="-1" href="{{pathFor 'playlist'}}">{{name}}</a>
-                             </li>
-                             <li class="divider"></li>
-                           {{/each}}
-                         </ul>
-                        <!-- /.dropdown-alerts -->
-                    </li>
-                    </ul>
-                </div>
-            </div>
+  <li class='track btn-embossed {{source}}'>
+      <a class='track-link' href="#">
+        <span class='logo {{source}}'></span>
+        <div class='track-info'>
+          <span class='artist {{source}}'>
+            {{artist}}
+          </span><br>
+          <span class='name'>
+            {{name}}
+          </span>
         </div>
-    </div>
-  </div>
+      </a>
+      <div class="track-drop dropdown-test">
+      <ul class="nav navbar-right">
+
+          <!-- /.dropdown -->
+          <li class="dropdown">
+              <button class="btn btn-primary btn-embossed dropdown-toggle" data-toggle="dropdown">Add<span class="caret"></span></button>
+              <span class="dropdown-arrow"></span>
+              <ul class="dropdown-menu dropdown-alerts">
+                {{#if playlistCount}}
+                 {{#each playlists}}
+                   <li>
+                       <a class="playlist-dropdown" data-pid={{_id}} data-soundId={{../soundId}} role="menuitem" tabindex="-1" href="{{pathFor 'playlist'}}">{{name}}</a>
+                   </li>
+                 {{/each}}
+                {{else}}
+                  <li><a href='#'>No owned playlists</a></li>
+                {{/if}}
+               </ul>
+              <!-- /.dropdown-alerts -->
+          </li>
+          </ul>
+      </div>
+    </li>
 </template>

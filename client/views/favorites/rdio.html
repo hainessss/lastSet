@@ -1,3 +1,17 @@
 <template name='rdio'>
-  <h1> we here bish</h1>
+  <div class="row">
+      <div class="col-lg-12 underline">
+          <h1 class="page-header">Favorites</h1>
+      </div>
+      <!-- /.col-lg-12 -->
+  </div>
+  <div id='playlist' data-id='rdio'>
+    {{#if rdioLoaded}}
+      {{#each sounds}}
+        {{> sound}}
+      {{/each}}
+    {{else}}
+      {{>spinner}}
+    {{/if}}
+  </div>
 </template>

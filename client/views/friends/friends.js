@@ -5,5 +5,9 @@ Template.friends.helpers({
 
   friendsLoaded: function() {
     return Session.get('friendsLoaded');
+  },
+
+  friendsCount: function() {
+    return Session.get('friendsData').length;
   }
 });

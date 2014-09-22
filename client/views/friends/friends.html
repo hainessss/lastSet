@@ -3,16 +3,17 @@
       <div class="col-lg-12 underline">
           <h1 class="page-header">Friends</h1>
       </div>
-      <!-- /.col-lg-12 -->
   </div>
   <div class="row friends">
     <div class="col-lg-12">
       {{#if friendsLoaded}}
-        {{#each friendsData}}
-          {{> friend}}
-        {{/each}}
-      {{else}}
-        {{> spinner}}
+        {{#if friendsCount}}
+          {{#each friendsData}}
+            {{> friend}}
+          {{/each}}
+        {{else}}
+          You have no friends that use this app :'(
+        {{/if}}
       {{/if}}
     </div>
   </div>

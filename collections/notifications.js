@@ -6,7 +6,7 @@ Notifications.allow({
   },
 
   update: function(userId, doc) {
-    return !! userId;
+    return doc && doc.userId === userId;
   }
 });
 

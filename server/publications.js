@@ -1,5 +1,5 @@
-Meteor.publish('tracks', function() {
-  return Tracks.find();
+Meteor.publish('tracks', function(playlistId) {
+  return Tracks.find({pid: playlistId});
 });
 
 Meteor.publish('playlists', function(userId) {
@@ -22,14 +22,10 @@ Meteor.publish('notifications', function(userId) {
   return Notifications.find({userId: userId, read: false});
 });
 
-Meteor.publish('comments', function(playlistId) {
-  return Comments.find({playlistId: playlistId});
-});
-
 Meteor.publish("userData", function () {
   if (this.userId) {
     return Meteor.users.find({_id: this.userId},
-                             {fields: {'services.facebook.id': true, 'scUser': true}});
+                             {fields: {'services.facebook.id': true, 'scUser': true, 'rdioUser': true}});
   } else {
     this.ready();
   }

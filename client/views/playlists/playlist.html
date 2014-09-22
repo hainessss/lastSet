@@ -1,6 +1,6 @@
 <template name="playlist">
-  <div class="row">
-      <div class="col-lg-12 underline">
+  <div class="row underline">
+      <div class="col-lg-12">
           <h1 class="page-header">{{name}}</h1>
             {{#if ownPlaylist}}
               <button type="button" class="btn btn-embossed btn-danger delete">Delete Playlist</button>
@@ -15,12 +15,9 @@
   {{#if ownPlaylist}}
     <div class="row">
       <div class="col-lg-12">
-        <div class="panel search panel-default box-shadow">
+        <div class="panel search">
             <div class="options">
-              <label id="private" class="radio">
-                <span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span>
-                <input type="radio" name="group2" value="2" data-toggle="radio">Private
-              </label>
+              <button id='private' type="button" class="btn btn-primary option">Make Private</button>
             </div>
         </div>
       </div>
@@ -30,22 +27,35 @@
   {{#if isCollaborator}}
     <div class="row">
       <div class="col-lg-12">
-        <div class="panel search panel-default box-shadow">
+        <div class="panel search">
             <div class="options">
-              <label id="tune" class="radio unchecked">
-                <span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span>
-                <input type="radio" name="group2" value="2" data-toggle="radio">Tune in
-              </label>
+              <button id='tune' type="button" class="btn btn-primary option">Tune In</button>
             </div>
         </div>
       </div>
     </div>
   {{/if}}
 
+  {{#unless isCollaborator}}
+    {{#unless ownPlaylist}}
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel search panel-default box-shadow">
+            <p>This is a private playist, the owner will have to accept your request to join.</p>
+          </div>
+        </div>
+      </div>
+    {{/unless}}
+  {{/unless}}
+
   <div id='playlist' data-id="{{_id}}">
-    {{#each tracks}}
-      {{> track}}
-    {{/each}}
+    {{#if trackCount}}
+      {{#each tracks}}
+        {{> track}}
+      {{/each}}
+    {{else}}
+      No tracks have been added to this playlist yet.
+    {{/if}}
   </div>
   <!-- /.row -->
 </template>

@@ -2,9 +2,14 @@ Playlists = new Meteor.Collection('playlists');
 
 Playlists.allow({
   update: function(userId, doc) {
-    return !! userId;
+    return doc && doc.userId === userId;
   }
 });
+
+toTitleCase = function(str) {
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
 
 Meteor.methods({
   createPlaylist: function(playlistData) {
@@ -18,13 +23,16 @@ Meteor.methods({
       throw new Meteor.Error(422, "Please give your playlist a name");
     }
 
+    playlistData.name = toTitleCase(playlistData.name);
+
     var playlist = _.extend(_.pick(playlistData, 'name'), {
       userId: user._id,
       submitted: new Date().getTime(),
       collaborators: [],
       FB_id: user.services.facebook.id,
       private: false,
-      nowPlaying: null
+      nowPlaying: null,
+      nowPlayingTrackPosition: 0
     });
 
     var playlistId = Playlists.insert(playlist);
@@ -32,6 +40,7 @@ Meteor.methods({
     return playlistId;
   },
 
+  //script deletes playlist
   deletePlaylist: function(playlistId, playlistAdminId) {
     var user = Meteor.user();
     var ownsPlaylist = function(userId, pfAdminId) {
@@ -50,6 +59,7 @@ Meteor.methods({
     var playlistId = Playlists.remove(playlistId);
   },
 
+  //this script adds a collaborator to a playlist
   addCollaborator: function(playlistId, override, playlistAdminId, joinerId) {
     var user = Meteor.user();
     var playlist = Playlists.findOne({_id: playlistId});

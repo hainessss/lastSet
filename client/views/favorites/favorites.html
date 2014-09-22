@@ -6,6 +6,7 @@
       <!-- /.col-lg-12 -->
   </div>
   <div id='playlist' data-id='soundcloud'>
+    <ul class='track-list'>
     {{#if soundsLoaded}}
       {{#each sounds}}
         {{> sound}}
@@ -13,5 +14,6 @@
     {{else}}
       {{>spinner}}
     {{/if}}
+    </ul>
   </div>
 </template>

@@ -1,10 +1,10 @@
 Template.track.helpers({
-  comments: function() {
-    return Comments.find({trackId: this._id});
-  },
-
   playlists: function() {
     return Playlists.find();
+  },
+
+  playlistCount: function() {
+    return Playlists.find().count();
   }
 });
 
@@ -13,15 +13,13 @@ Template.track.events({
   'click .playlist-dropdown': function(e) {
     e.preventDefault();
 
-    var track = Tracks.findOne({_id: e.currentTarget.dataset.id});
+    var track = Tracks.findOne({soundId: e.currentTarget.dataset.soundid});
 
     Meteor.call('addPlaylistTrack',
       this._id, track, function(error, result) {
       if (error) {
-        return alert(error.reason);
+        throwError(error.reason);
       }
-
-      Queue.update();
     });
   }
 });

@@ -1,6 +1,10 @@
 Template.friend.helpers({
   playlists: function() {
     return Playlists.find({FB_id: this.id});
+  },
+
+  playlistCount: function() {
+    return Playlists.find({FB_id: this.id}).count();
   }
 });
 
@@ -12,7 +16,7 @@ Template.friend.events({
 
     Meteor.call('addCollaborator', playlistId, false, adminId, joinerId, function(error, result) {
       if (error) {
-        return alert(error.reason);
+        throwError(error.reason);
       }
     });
   }

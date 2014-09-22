@@ -43,13 +43,11 @@ mongo@1.0.4
 mrt:iron-router-progress@0.9.2
 natestrauser:font-awesome@4.2.0
 npm@0.0.0
-oauth1@1.0.1
 oauth2@1.0.0
 oauth@1.0.1
 observe-sequence@1.0.2
 ordered-dict@1.0.0
 random@1.0.0
-rdio@0.0.0
 reactive-dict@1.0.2
 reactive-var@1.0.1
 reload@1.0.1

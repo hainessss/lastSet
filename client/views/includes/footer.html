@@ -16,18 +16,26 @@
         <div id='progress' style="width: {{progress}}"></div>
       {{/if}}
       <div class="player">
-        <div class='footer-track-info'>
-          <strong>{{playingTrack.artist}}</strong><br>{{playingTrack.name}}
-        </div>
-        <div class="controls">
-          <span id="backward"></span>
-          {{#if playing}}
-            <span id='pause'></span>
-          {{else}}
-            <span id="play"></span>
-          {{/if}}
-          <span id="forward"></span>
-        </div>
+        {{#if nowPlaying}}
+          <div class='footer-track-info'>
+            <strong>{{nowPlaying.artist}}</strong><br>{{nowPlaying.name}}
+          </div>
+          <div class="controls">
+          </div>
+        {{else}}
+          <div class='footer-track-info'>
+            <strong>{{playingTrack.artist}}</strong><br>{{playingTrack.name}}
+          </div>
+          <div class="controls">
+            <span id="backward"></span>
+            {{#if playing}}
+              <span id='pause'></span>
+            {{else}}
+              <span id="play"></span>
+            {{/if}}
+            <span id="forward"></span>
+          </div>
+        {{/if}}
       </div>
     </div>
   </div>

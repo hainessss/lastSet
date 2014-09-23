@@ -240,6 +240,10 @@ Template.layout.events({
     }
   },
 
+  'click #scRefresh': function(e) {
+    Session.set('scUser', true);
+  },
+
   //authenticates the rdio api and saves rdio username
   'click #rdioUser': function(e) {
     e.preventDefault();

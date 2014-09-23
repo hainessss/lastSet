@@ -270,7 +270,9 @@ h6 small,
 .h6 small {
   color: #e7e9ec;
 }
-h1,
+h1 {
+  margin-top: 10px;
+}
 h2,
 h3 {
   margin-top: 30px;
@@ -396,11 +398,6 @@ a.bg-warning:hover {
 }
 a.bg-danger:hover {
   background-color: #e4b9b9;
-}
-.page-header {
-  padding-bottom: 14px;
-  margin: 60px 0 30px;
-  border-bottom: 1px solid #e7e9ec;
 }
 ul,
 ol {

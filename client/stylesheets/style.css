@@ -41,6 +41,7 @@ h1 {
   font-size: 2.5em;
   font-family: Lato, sans-serif;
   font-weight: normal;
+  margin-bottom: 0px;
 }
 
 h3 {
@@ -66,12 +67,6 @@ h4 {
   font-size: 0.8em;
 }
 
-.page-header {
-  position: relative;
-  display: inline-block;
-  margin-top: 25px;
-  border-bottom: 1px solid #34495e;
-}
 
 .navbar-default .navbar-brand {
   color: #16a085;
@@ -79,7 +74,6 @@ h4 {
 
 .underline {
   border-bottom: 1px solid white;
-  height: 100px;
   padding-left: 0;
   padding-right: 0;
   padding-bottom: 15px;
@@ -545,9 +539,8 @@ ul.track-list {
 
 .btn.btn-danger {
   display: inline-block;
-  float: right;
   background-color: #c0392b;
-  margin-top: 30px;
+  margin-top: 15px;
 }
 
 .navbar-toggle {
@@ -579,7 +572,8 @@ ul.track-list {
 
 .navbar-new {
   margin-top: 0px;
-  margin-right: 22px;
+  margin-right: 5px;
+  margin-left: 20px;
 }
 
 .search-bar {
@@ -590,7 +584,7 @@ ul.track-list {
     margin: auto auto;
     margin-top: 8px;
     margin-left: 20px;
-    min-width: 340px;
+    min-width: 320px;
     height: 40px;
     font-family: sans-serif;
     font-size: 1.3rem;
@@ -604,6 +598,7 @@ ul.track-list {
   height: 35px;
   margin-top: 2px;
 }
+
 
 div.track-name {
   position: absolute;
@@ -717,6 +712,11 @@ div.track-name {
       margin-left: 0px;
     }
 
+    .navbar-new {
+      margin-top: 0px;
+      margin-right: 20px;
+    }
+
     #page-wrapper {
         position: inherit;
         margin: 0 0 0 250px;
@@ -808,11 +808,11 @@ div.track-name {
       width: 60px;
     }
 
-    .page-header {
+    h1.page-header {
       position: relative;
       display: inline-block;
       margin-top: 25px;
-      border-bottom: 1px solid #34495e;
+      margin-bottom: 0px;
     }
 
     .footer {
@@ -996,7 +996,6 @@ div.track-name {
     right: auto;
     left: 120px;
  }
-
 
 }
 

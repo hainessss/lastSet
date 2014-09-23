@@ -23,7 +23,7 @@ Template.footer.helpers({
 
   nowPlayingTrackPosition: function() {
     if (Session.get('nowPlaying')) {
-      return Playlists.findOne(Session.get('nowPlaying')).nowPlayingTrackPosition + "%";
+      return Playlists.findOne(Session.get('nowPlaying')).nowPlayingTrackPosition;
     }
   },
 

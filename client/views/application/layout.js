@@ -58,6 +58,7 @@ Template.layout.rendered = function() {
   //html5 player logic
   Audio = $('audio').bind('play', function() {
             Session.set('playing', true);
+            Session.set('nowPlaying', false);
 
             //set album art and update playlist with current song
             Session.set('albumArt', Queue.tracks[Session.get('currentTrack')].artwork_url);

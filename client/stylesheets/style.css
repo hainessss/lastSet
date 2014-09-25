@@ -369,8 +369,9 @@ ul li #alternate {
   margin-bottom: 15px;
 }
 
-.dropdown-toggle.friend-dropdown {
+.btn.dropdown-toggle.friend-dropdown {
   width: 60px;
+  height: 60px;
   font-size: 0.8em;
   text-align: center;
 }
@@ -706,15 +707,16 @@ div.track-name {
     background-color: #34495e;
 }
 
+@media(min-width:769px) {
+  .navbar-new {
+    margin-top: 0px;
+    margin-right: 20px;
+  }
+}
 
 @media(min-width:768px) {
     .search-bar {
       margin-left: 0px;
-    }
-
-    .navbar-new {
-      margin-top: 0px;
-      margin-right: 20px;
     }
 
     #page-wrapper {

@@ -276,8 +276,9 @@ Template.layout.events({
       if(error) {
         throwError(error.reason);
       } else {
-        Router.go('favorites');
+        Session.set('soundsLoaded', false);
         Session.set('scUser', false);
+        Router.go('favorites');
       }
     });
   },

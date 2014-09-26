@@ -376,6 +376,10 @@ ul li #alternate {
   text-align: center;
 }
 
+.dropdown-menu .remove {
+  color: #16a085;
+}
+
 .panel-body {
   height: 100%;
 }

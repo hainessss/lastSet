@@ -32,11 +32,11 @@ Meteor.methods({
     var playlist = Playlists.findOne(track.pid);
     var user = Meteor.user();
 
-    if (playlist.userId !== user._id || track.contributer !== user._id) {
-      throw new Meteor.Error(422, "You must be the playlist admin or have contributed the song to remove it");
+    if ((playlist.userId === user._id) || (track.contributer === user._id)) {
+      return Tracks.remove({_id: track._id});
     }
 
-    return Tracks.remove({_id: track._id});
+    throw new Meteor.Error(422, "You must be the playlist admin or have contributed the song to remove it");
   }
 });
 

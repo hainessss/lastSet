@@ -22,9 +22,9 @@ Template.track.events({
   },
 
   'click .remove': function(e) {
-    var track = Tracks.findOne(e.currentTarget.dataset.trackId);
+    var track = Tracks.findOne(e.currentTarget.dataset.trackid);
 
-    Meteor.call('deletePlaylistTrack', track function(error, result) {
+    Meteor.call('deletePlaylistTrack', track, function(error, result) {
       if (error) {
         throwError(error.reason);
       }

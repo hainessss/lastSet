@@ -35,6 +35,9 @@ Template.track.events({
           if (currentTrackIndex > removedTrackIndex) {
             $('#playlist').find('.track:eq(' + Session.get('currentTrack') + ')').removeClass('playingTrack');
             Session.set('currentTrack', currentTrackIndex - 1);
+          } else if (currentTrackIndex === removedTrackIndex) {
+            pauseAudio();
+            $('#playlist').find('.track:eq(' + Session.get('currentTrack') + ')').removeClass('playingTrack');
           }
         }
       }

@@ -23,7 +23,7 @@ Meteor.methods({
   getSounds: function() {
     var user = Meteor.user();
     SC.get('/resolve', {url: 'http://soundcloud.com/' + user.scUser}, function(user) {
-      SC.get('/users/' + user.id + '/favorites', function(result) {
+      SC.get('/users/' + user.id + '/favorites', {limit: 200}, function(result) {
         for (var i = 0; i < result.length; i++) {
           Sounds.insert({
            soundId: result[i].id.toString(),

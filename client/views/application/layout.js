@@ -109,6 +109,11 @@ Template.layout.rendered = function() {
     Audio.src = Queue.tracks[Session.get('currentTrack')].track_url;
   };
 
+  pauseAudio = function() {
+    R.player.pause();
+    Audio.pause();
+  };
+
   //plays a track on either html5 of Rdio API
   playTrack = function(currentTrack) {
     var track = Queue.tracks[currentTrack];

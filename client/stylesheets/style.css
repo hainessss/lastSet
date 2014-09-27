@@ -557,6 +557,7 @@ ul.track-list {
 }
 
 #page-wrapper {
+
 }
 
 #header {
@@ -725,7 +726,7 @@ div.track-name {
 
     #page-wrapper {
         position: inherit;
-        margin: 0 0 0 250px;
+        margin: 0 0 75px 250px;
         padding: 0 30px;
         border-left: 1px solid #95a5a6;
     }
